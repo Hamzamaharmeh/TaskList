@@ -4,6 +4,10 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
@@ -12,26 +16,33 @@ class AppTest {
 
         TaskList list = new TaskList();
         list.add("hamza");
-        assertEquals("""
+        String date = LocalDate.now().toString();
+        String format   = """
                 [
-                {
-                    "id": 0,
-                    "body": hamza,
-                    "status": TODO,
-                    "last updated": -
-                }
-                ]""",list.toJSON());
+                    {
+                        "id": 0,
+                        "body": hamza,
+                        "status": TODO,
+                        "created at": %s,
+                        "last updated": -
+                    }
+                ]""";
+
+        assertEquals(String.format(format,date),list.toJSON());
     }
     @Test void taskToJSON() {
         Task t = new Task("hamza", 1);
-        assertEquals("""
-                {
-                    "id": 1,
-                    "body": hamza,
-                    "status": TODO,
-                    "last updated": -
-                }
-                """, t.toJSON());
+        String date = LocalDate.now().toString();
+        String fomat = """
+                    {
+                        "id": 1,
+                        "body": hamza,
+                        "status": TODO,
+                        "created at": %s,
+                        "last updated": -
+                    }
+                """;
+        assertEquals(String.format(fomat,date), t.toJSON());
     }
     @Test void addCommand() {
         TaskList list1 = new TaskList();
@@ -42,10 +53,10 @@ class AppTest {
     @Test void updateCommand() {
         TaskList list1 = new TaskList();
         TaskList list2 = new TaskList();
-        list1.add("hamza");
-        list2.add("hamza");
+        list1.add("test");
+        list2.add("test");
         assertEquals(list1,list2);
-        list1.updateStatus(,TaskStatus.DONE);
+        list1.updateStatus(TaskStatus.DONE,new String[] {"0"});
         assertNotEquals(list1,list2);
     }
     @Test void removeCommand() {
