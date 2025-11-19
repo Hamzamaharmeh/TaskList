@@ -6,7 +6,6 @@ package org.example;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,7 +41,7 @@ class AppTest {
                         "last updated": -
                     }
                 """;
-        assertEquals(String.format(fomat,date), t.toJSON());
+        assertEquals(String.format(fomat,date), t.toString());
     }
     @Test void addCommand() {
         TaskList list1 = new TaskList();
